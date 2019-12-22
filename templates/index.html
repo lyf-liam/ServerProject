@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+
+                <div class="row">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-6">
+                        <br>
+                        <div class="alert alert-success alert-dismissable">
+                            <br>
+                            <h3>
+                                人员管理系统
+                            </h3>
+                            <br>
+                        </div>
+
+
+                        <div class="tabbable" id="tabs-587738">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#tab1" data-toggle="tab">登录</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#tab2" data-toggle="tab">注册</a>
+                                </li>
+                            </ul>
+                            <br>
+                            <br>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab1">
+
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <form role="form" id="login">
+                                                    <div class="form-group">
+                                                        <label>
+                                                            工号
+                                                        </label>
+                                                        <input type="text" name="zh" class="form-control"/>
+                                                    </div>
+                                                    <div class="form-group">
+
+                                                        <label>
+                                                            密码
+                                                        </label>
+                                                        <input type="password" name="mm" class="form-control"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>
+                                                            用户类型
+                                                        </label>
+                                                        <div class="form-control">
+                                                            <input type="radio" name="type" value="0" checked/>用户
+                                                            <input type="radio" name="type" value="1"/>管理员
+                                                        </div>
+
+                                                    </div>
+                                                </form>
+                                                <button onclick="login()" class="btn btn-primary">
+                                                    登录
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane" id="tab2">
+                                    <div class="container-fluid">
+                                        <div class="row">
+
+
+                                            <div class="col-md-12">
+                                                <form role="form" id="register">
+
+                                                    <div class="form-group">
+                                                        <label>
+                                                            工号
+                                                        </label>
+                                                        <input type="text" name="zh" class="form-control"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>
+                                                            姓名
+                                                        </label>
+                                                        <input type="text" name="nc" class="form-control"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>
+                                                            性别
+                                                        </label>
+                                                        <div class="form-control">
+                                                            <input type="radio" name="gender" value="0" checked/>男
+                                                            <input type="radio" name="gender" value="1"/>女
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>
+                                                            手机号
+                                                        </label>
+                                                        <input type="text" name="phone" class="form-control"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">
+                                                            职位
+                                                        </label>
+                                                        <select name="position" class="form-control">
+
+                                                            {% for position in positions %}
+                                                                <option value="{{ position }}">{{ position }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+
+                                                        <label>
+                                                            密码
+                                                        </label>
+                                                        <input type="password" name="mm" class="form-control"/>
+                                                    </div>
+                                                    <div class="form-group">
+
+                                                        <label>
+                                                            确认密码
+                                                        </label>
+                                                        <input type="password" name="qrmm" class="form-control"/>
+                                                    </div>
+
+
+                                                </form>
+                                                <button onclick="register()" class="btn btn-primary">
+                                                    注册
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function login() {
+
+            let form = new FormData(document.getElementById("login"));
+            $.ajax({
+                url: "/login",
+                type: "post",
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data == '用户')
+                        window.location.href =  'http://101.37.31.180:8888/';
+                    else if (data == '管理员')
+                        window.location.href =  'http://101.37.31.180:8888/managePerson';
+                    else {
+                        alert(data);
+                        console.log(data)
+                    }
+
+                },
+                error: function (data) {
+                    alert(data);
+                },
+                complete: function () {
+                }
+            });
+
+        }
+
+        function register() {
+            let form = new FormData(document.getElementById("register"));
+            $.ajax({
+                url: "/register",
+                type: "post",
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    alert(data);
+                },
+                error: function (data) {
+                    alert(data);
+                },
+                complete: function () {
+                }
+            });
+        }
+
+    </script>
+{% endblock %}
+
+

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+    <script src="http://cdn.ckeditor.com/4.9.2/standard/ckeditor.js"></script>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                <br>
+                {% include 'rootNav.html' %}
+                <HR style="filter: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 size=1>
+                <br>
+                {% if tip %}
+                    <div style="color: red">{{ tip }}</div>
+                {% else %}
+
+                {% endif %}
+                <br>
+
+                <div class="col-md-12">
+
+                    <form role="form" method="post">
+
+                        <div class="form-group">
+                            <label>
+                                标题
+                            </label>
+                            <input type="text" name="title" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                内容
+                            </label>
+                            {{ ckeditor.create() }}
+                            {#                            <input type="text" name="content" class="form-control"/>#}
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            发布
+                        </button>
+                    </form>
+                </div>
+
+
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+    </div>
+    {{ ckeditor.load() }}
+    {{ ckeditor.config() }}  <!-- 这时不用设置name参数 -->
+
+{% endblock %}
+
+

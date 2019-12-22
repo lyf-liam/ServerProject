@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                <br>
+
+
+                {% include 'nav.html' %}
+
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <br>
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <td class="text-xl-right">头像</td>
+                                <td>
+                                    <img alt="Bootstrap Image Preview" id="icon" src="{{ u.iconUrl }}"
+                                         style="width:150px;height:150px;"/>
+                                    <br>
+                                    <button type="button" class="btn btn-primary btn-sm"
+                                            onclick='javascript:$("#cover").click();'>
+                                        上传头像
+                                    </button>
+                                    <input type="file" name="cover" id="cover" onchange="upload_cover()"
+                                           style="display: none">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-xl-right">工号</td>
+                                <td id="">{{ u.jobNumber }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-xl-right">姓名</td>
+                                <td id="">{{ u.name }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-xl-right">手机号</td>
+                                <td id="">{{ u.phone }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-xl-right">性别</td>
+                                <td id="">
+                                    {% if u.gender==0 %}
+                                        男
+                                    {% else %}
+                                        女
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-xl-right">职位</td>
+                                <td id="">{{ u.position }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-xl-right">联系地址</td>
+                                <td id="">{{ u.address }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-xl-right">邮箱</td>
+                                <td id="">{{ u.email }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <a href="/updateInfo">修改信息</a> &nbsp; &nbsp;&nbsp;<a href="/updatePwd">修改密码</a>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+    </div>
+    <script>
+        function upload_cover() {
+            if (document.getElementById('cover').files == 0)
+                return;
+            let cover = new FormData();
+            let fileObj = document.getElementById('cover').files[0];
+
+            cover.append('cover', fileObj)
+            $.ajax({
+                type: 'post',
+                url: '/upload_cover',
+                data: cover,
+                async: false,
+                processData: false,
+                contentType: false,
+                success: function (data, status) {
+                    if (data['status'] == 'error') {
+                        alert(data['msg']);
+                    } else {
+                        document.getElementById('icon').src = data['url'];
+                    }
+                },
+            });
+        }
+    </script>
+{% endblock %}
+
+
