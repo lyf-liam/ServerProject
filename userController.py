@@ -55,8 +55,7 @@ def notice():
 
     paginate = Notice.query.filter().paginate(
         page=page, per_page=3)
-    return render_template('notice.html', name=session["name"], nav='notice'
-                           , paginate=paginate)
+    return render_template('notice.html', name=session["name"], nav='notice', paginate=paginate)
 
 
 @app.route("/", methods=['GET'])
